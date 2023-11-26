@@ -85,7 +85,7 @@ namespace CreateExcel
             //寫進去的 東西
             string ExcelWrite = "Car.xlsx";
             //設置路徑 
-            string filePatth = $@"D:\\Bulidschool\\excel\\{CreateFileName}.csv";
+            string filePatth = $@"C:\\Bulidschool\\excel\\{CreateFileName}.csv";
             string WriteFileName = CreateFileName;
 
             using (StreamWriter writer = new StreamWriter(filePatth))
@@ -114,7 +114,7 @@ namespace CreateExcel
         private void CreateTxt(object sender, RoutedEventArgs e)
         {
             //新增TXT檔案的路徑
-            string path = $@"D:\\Bulidschool\\txt\\{CreateFileNametxt}";
+            string path = $@"C:\\Bulidschool\\txt\\{CreateFileNametxt}";
             //判別檔案是否存在
             if (System.IO.File.Exists(path))
             {
