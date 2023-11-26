@@ -1,0 +1,24 @@
+﻿<Window x:Class="CreateExcel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CreateExcel"
+        mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="0,5,0,-5">
+        <Button Content="Create" HorizontalAlignment="Left" Margin="150,101,0,0" VerticalAlignment="Top" Height="80" Width="80" Click="Button_Create"/>
+        <Button Content="Write" HorizontalAlignment="Left" Margin="384,101,0,0" VerticalAlignment="Top"  Height="80" Width="80" Click="Button_Write"/>
+        <Button Content="Read" HorizontalAlignment="Left" Margin="623,101,0,0" VerticalAlignment="Top"  Height="80" Width="80" Click="Button_Read"/>
+        <Label Content="請輸入檔名" HorizontalAlignment="Left" Margin="75,64,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="150,68,0,0" TextWrapping="Wrap" Text="{Binding CreateFileNameText}" VerticalAlignment="Top" Width="120" />
+        <Button Content="CreateTxt" HorizontalAlignment="Left" Margin="150,290,0,0" VerticalAlignment="Top" Height="80" Width="80" Click="CreateTxt"/>
+        <Button Content="WriteTxt" HorizontalAlignment="Left" Margin="384,290,0,0" VerticalAlignment="Top" Height="80" Width="80" Click="WriteTxt"/>
+        <Button Content="ReadTxt" HorizontalAlignment="Left" Margin="623,290,0,0" VerticalAlignment="Top" Height="80" Width="80" Click="ReadTxt"/>
+        <Label Content="請輸入檔名" HorizontalAlignment="Left" Margin="75,256,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Margin="150,260,0,0" TextWrapping="Wrap" Text="{Binding CreateFileNameTxt}" VerticalAlignment="Top" Width="120" />
+
+
+    </Grid>
+</Window>
