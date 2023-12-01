@@ -28,87 +28,44 @@ namespace CreateExcel
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public string FolderPath { get; set; }
-        public string Extension {  get; set; }  
+        public OutputFileManagement OutputFileManagement { get; set; }  
+        public FileInformation FileInformation { get; set; }
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public MainWindow()
         {
             InitializeComponent();
+            FileInformation = new FileInformation();
         }
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public string FileName { get; set; }
-
+        private void SetupOutputFileManagement()
+        {
+            OutputFileManagement = new OutputFileManagement(FileInformation);
+            OutputFileManagement.ReadTextFromFile -= OutputFileManagement_ReadTextFromFile;
+            OutputFileManagement.ReadTextFromFile += OutputFileManagement_ReadTextFromFile;
+        }
+        private void OutputFileManagement_ReadTextFromFile(object? sender, string e)
+        {
+            textLog.AppendText(e);
+            textLog.ScrollToEnd();
+        }
 
         private void Button_Create(object sender, RoutedEventArgs e)
         {
-            string fileName = FileName;
-            FileCRUD.CreateFile(FolderPath, fileName, ".csv");
+            SetupOutputFileManagement();
+            OutputFileManagement.CreateFile();
         }
-
-
 
         private void Button_Write(object sender, RoutedEventArgs e)
         {
-            /*
-                var openFileDialog = new Microsoft.Win32.OpenFileDialog();
-                openFileDialog.ShowDialog();
-                using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
-                {
-                    writer.WriteLine(txtContent);
-                }
-                MessageBox.Show("寫入完成");
-            */
+            SetupOutputFileManagement();
             string writeContent = "Hello Excel";
-            FileCRUD.WriteFile(writeContent);
+            OutputFileManagement.WriteFile(writeContent);
         }
+
         private void Button_Read(object sender, RoutedEventArgs e)
         {
-            FileCRUD.ReadFile();
-        }
-
-
-
-        //以下對txt操作
-        private void CreateTxt(object sender, RoutedEventArgs e)
-        {
-            //創txt
-            if (!string.IsNullOrWhiteSpace(FolderPath))
-            {
-                FileCRUD.CreateFile(FolderPath, FileName, "txt");
-            }
-        }
-
-        private void WriteTxt(object sender, RoutedEventArgs e)
-        {
-            /*
-           openFileDialog = new Microsoft.Win32.OpenFileDialog();
-           string TxtWrite = "Hello WPF";
-           openFileDialog.DefaultExt = ".txt";//預設副檔案名
-           openFileDialog.ShowDialog();
-           using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
-           {
-                writer.WriteLine(TxtWrite);
-           }
-            */
-            //挑選寫入的檔案
-            string writeContent = "Hello WPF";
-            FileCRUD.WriteFile(writeContent);
-        }
-
-
-
-
-
-        private void ReadTxt(object sender, RoutedEventArgs e)
-        {
-            //挑選要讀取的txt
-            /*
-            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.ShowDialog();
-            txtContent = System.IO.File.ReadAllText(openFileDialog.FileName);
-            MessageBox.Show(txtContent);
-            */
-            FileCRUD.ReadFile();
+            SetupOutputFileManagement();
+            OutputFileManagement.ReadFile();
         }
 
         private void SelectFolder_Click(object sender, RoutedEventArgs e)
@@ -116,74 +73,8 @@ namespace CreateExcel
             var dialog = new CommonOpenFileDialog() { IsFolderPicker = true };
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                FolderPath = dialog.FileName;
+                FileInformation.FolderPath = dialog.FileName;
             }
         }
-
-
-        //public void CreateFile(string folderName,string fileName,string fileExtension)
-        //{
-        //    //path路徑
-        //    //folderName文件夾名稱
-        //    //fileName文件名稱從txet Bading資料來源
-        //    //fileExtension 副檔名
-        //    //創建檔案的條件 1.路徑兩個一個文件夾一個 2.檔名 3.寫入的副檔名
-        //    string  path = $@"C:\\Bulidschool\{folderName}\{fileName}.{fileExtension}";
-        //    //判別檔案是否存在
-
-        //    if(fileName == null)
-        //    {
-        //        MessageBox.Show("檔名不可為空白");
-        //    }
-        //    else
-        //    {
-        //        if (System.IO.File.Exists(path))
-        //        {
-        //            //存在時會跳出請更換檔名
-        //            MessageBox.Show(fileName + "檔案已存在請更換檔名");
-        //        }
-        //        else
-        //        {
-        //            //不存在時直接創建檔名
-        //            using (StreamWriter writer = new StreamWriter(path))
-        //            {
-        //                MessageBox.Show(fileName + "創建成功");
-
-        //            }
-        //        }
-        //    }
-
-        //}
-        //public static object WriteFile(string writeContent)
-        //{
-        //    string FileName;
-        //    var openFileDialog= new Microsoft.Win32.OpenFileDialog();
-        //    openFileDialog.ShowDialog();
-        //    using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
-        //    {
-        //        writer.WriteLine(writeContent);
-        //    }
-
-        //    return MessageBox.Show("寫入成功");
-        //}
-
-        //public static object ReadFile() 
-        //{   
-        //    var openFileDialog = new Microsoft.Win32.OpenFileDialog();
-        //    openFileDialog.ShowDialog();
-        //    string fileContent = System.IO.File.ReadAllText(openFileDialog.FileName);
-        //    if (fileContent == "")//這裡不可用null
-        //    {
-
-        //        return MessageBox.Show("沒有任何內容有夠可悲");
-        //    }
-        //    else
-        //    {
-        //        return MessageBox.Show(fileContent);
-        //    }
-
-        //}
-
-
     }
 }

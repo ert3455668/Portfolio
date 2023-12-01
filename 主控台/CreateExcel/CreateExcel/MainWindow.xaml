@@ -10,6 +10,7 @@
     <Grid Margin="0,5,0,-5">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Margin="10">
@@ -22,30 +23,33 @@
                 </WrapPanel.Resources>
                 <WrapPanel>
                     <TextBlock Text="檔名 : "/>
-                    <TextBox  Text="{Binding FileName}" />
+                    <TextBox  Text="{Binding FileInformation.FileName}" />
                 </WrapPanel>
                 <WrapPanel Margin="20,0">
                     <TextBlock Text="副檔名 : "/>
-                    <TextBox   Text="{Binding Extension}"  />
+                    <TextBox   Text="{Binding FileInformation.Extension}"  />
                 </WrapPanel>
             </WrapPanel>
             <WrapPanel Margin="0,10,0,0">
                 <TextBlock Text="路徑 : "/>
-                <TextBox  TextWrapping="Wrap" Text="{Binding FolderPath}" IsEnabled="False" MinWidth="450" />
+                <TextBox  TextWrapping="Wrap" Text="{Binding FileInformation.FolderPath}" IsEnabled="False" MinWidth="450" />
                 <Button Content="..." Click="SelectFolder_Click" Width="50" FontSize="20" Margin="10,0"/>
             </WrapPanel>
         </StackPanel>
-        <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
+        <WrapPanel Grid.Row="1">
             <WrapPanel.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Width" Value="100"/>
                     <Setter Property="Height" Value="50"/>
-                    <Setter Property="Margin" Value="50"/>
+                    <Setter Property="Margin" Value="10"/>
                 </Style>
             </WrapPanel.Resources>
             <Button Content="Create"  Click="Button_Create"/>
             <Button Content="Write" Click="Button_Write"/>
             <Button Content="Read" Click="Button_Read" />
         </WrapPanel>
+        <DockPanel Grid.Row="2">
+            <TextBox x:Name="textLog"/>
+        </DockPanel>
     </Grid>
 </Window>
