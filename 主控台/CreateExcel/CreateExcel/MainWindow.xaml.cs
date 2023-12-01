@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -71,95 +72,151 @@ namespace CreateExcel
        
         private string CreateFileNametxt;
 
-        string txtContent;
+        
 
 
 
         private void Button_Create(object sender, RoutedEventArgs e)
         {
-            //判別檔案是否存在
-            //if(File.Exists(path)) 
-            // {
-            //     File.Delete(path);
-            // }
-            //寫進去的 東西
-            string ExcelWrite = "Car.xlsx";
-            //設置路徑 
-            string filePatth = $@"C:\\Bulidschool\\excel\\{CreateFileName}.csv";
-            string WriteFileName = CreateFileName;
-
-            using (StreamWriter writer = new StreamWriter(filePatth))
-            {
-                writer.WriteLine(ExcelWrite);
-            }
-            MessageBox.Show("創建成功");
-
+            //Excelx
+            string folderName = "excel";
+            string fileName = CreateFileName;
+            string fileExtension = "csv";
+            CreateFile(folderName,fileName,fileExtension);
         }
+
+
 
         private void Button_Write(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.ShowDialog();
-            using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
-            {
-                writer.WriteLine(txtContent);
-            }
-            MessageBox.Show("寫入完成");
+            /*
+                var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+                openFileDialog.ShowDialog();
+                using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
+                {
+                    writer.WriteLine(txtContent);
+                }
+                MessageBox.Show("寫入完成");
+            */
+            string writeContent = "Hello Excel";
+            WriteFile(writeContent);
         }
-
+        private void Button_Read(object sender, RoutedEventArgs e)
+        {
+            ReadFile();
+        }
 
 
 
         //以下對txt操作
         private void CreateTxt(object sender, RoutedEventArgs e)
         {
-            //新增TXT檔案的路徑
-            string path = $@"C:\\Bulidschool\\txt\\{CreateFileNametxt}";
-            //判別檔案是否存在
-            if (System.IO.File.Exists(path))
-            {
-                //存在時會跳出請更換檔名
-                MessageBox.Show(CreateFileNametxt + "檔案已存在請更換檔名");
-            }
-            else
-            {
-                //不存在時直接創建檔名
-                using (StreamWriter writer = new StreamWriter(path))
-                {
-                    MessageBox.Show(CreateFileNametxt+"創建成功");
-
-                }
-            }
-
-
-           
-
+            //創txt
+            string folderName = "txt";
+            string fileName = CreateFileNametxt;
+            string fileExtension = "txt";
+            CreateFile(folderName, fileName, fileExtension);
         }
 
         private void WriteTxt(object sender, RoutedEventArgs e)
         {
+                /*
+               openFileDialog = new Microsoft.Win32.OpenFileDialog();
+               string TxtWrite = "Hello WPF";
+               openFileDialog.DefaultExt = ".txt";//預設副檔案名
+               openFileDialog.ShowDialog();
+               using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
+               {
+                    writer.WriteLine(TxtWrite);
+               }
+                */
             //挑選寫入的檔案
-            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            string TxtWrite = "Hello WPF";
-            openFileDialog.DefaultExt = ".txt";//預設副檔案名
-            openFileDialog.ShowDialog();
-            using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
-            {
-                writer.WriteLine(TxtWrite);
-            }
-
+            string writeContent = "Hello WPF";
+            WriteFile(writeContent);
         }
+
+            
+
+
 
         private void ReadTxt(object sender, RoutedEventArgs e)
         {
             //挑選要讀取的txt
+            /*
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.ShowDialog();
             txtContent = System.IO.File.ReadAllText(openFileDialog.FileName);
             MessageBox.Show(txtContent);
+            */
+            ReadFile();
         }
-        //我更新了
-        //更新第二次
 
+
+        public void CreateFile(string folderName,string fileName,string fileExtension)
+        {
+            //path路徑
+            //folderName文件夾名稱
+            //fileName文件名稱從txet Bading資料來源
+            //fileExtension 副檔名
+            //創建檔案的條件 1.路徑兩個一個文件夾一個 2.檔名 3.寫入的副檔名
+            string  path = $@"C:\\Bulidschool\{folderName}\{fileName}.{fileExtension}";
+            //判別檔案是否存在
+            
+            if(fileName == null)
+            {
+                MessageBox.Show("檔名不可為空白");
+            }
+            else
+            {
+                if (System.IO.File.Exists(path))
+                {
+                    //存在時會跳出請更換檔名
+                    MessageBox.Show(fileName + "檔案已存在請更換檔名");
+                }
+                else
+                {
+                    //不存在時直接創建檔名
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        MessageBox.Show(fileName + "創建成功");
+
+                    }
+                }
+            }
+           
+
+
+        }
+        public static object WriteFile(string writeContent)
+        {
+            string FileName;
+            var openFileDialog= new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.ShowDialog();
+            using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
+            {
+                writer.WriteLine(writeContent);
+            }
+
+            return MessageBox.Show("寫入成功");
+        }
+
+        public static object ReadFile() 
+        {   
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.ShowDialog();
+            string fileContent = System.IO.File.ReadAllText(openFileDialog.FileName);
+            if (fileContent == "")//這裡不可用null
+            {
+                
+                return MessageBox.Show("沒有任何內容有夠可悲");
+            }
+            else
+            {
+                return MessageBox.Show(fileContent);
+            }
+            
+        }
+
+        
     }
 }
