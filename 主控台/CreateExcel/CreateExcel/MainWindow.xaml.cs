@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,64 +26,23 @@ namespace CreateExcel
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window,INotifyPropertyChanged
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        public string FolderPath { get; set; }
+        public string Extension {  get; set; }  
         public MainWindow()
         {
             InitializeComponent();
         }
         public event PropertyChangedEventHandler? PropertyChanged;
-        private void INotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
-
-
-        public string CreateFileNameText
-        {
-            get
-            {
-                return CreateFileName;
-            }
-            set
-            {
-                CreateFileName = value;
-                INotifyPropertyChanged(); 
-
-
-            }
-        }
-        public string CreateFileNameTxt
-        {
-            get
-            {
-                return CreateFileNametxt;
-            }
-            set
-            {
-                CreateFileNametxt = value;
-                INotifyPropertyChanged();
-
-
-            }
-        }
-
-        private string CreateFileName;
-       
-        private string CreateFileNametxt;
-
-        
-
+        public string FileName { get; set; }
 
 
         private void Button_Create(object sender, RoutedEventArgs e)
         {
-            //Excelx
-            string folderName = "excel";
-            string fileName = CreateFileName;
-            string fileExtension = "csv";
-            FileCRUD.CreateFile(folderName,fileName,fileExtension);
+            string fileName = FileName;
+            FileCRUD.CreateFile(FolderPath, fileName, ".csv");
         }
 
 
@@ -112,30 +72,30 @@ namespace CreateExcel
         private void CreateTxt(object sender, RoutedEventArgs e)
         {
             //創txt
-            string folderName = "txt";
-            string fileName = CreateFileNametxt;
-            string fileExtension = "txt";
-            FileCRUD.CreateFile(folderName,fileName,fileExtension);
+            if (!string.IsNullOrWhiteSpace(FolderPath))
+            {
+                FileCRUD.CreateFile(FolderPath, FileName, "txt");
+            }
         }
 
         private void WriteTxt(object sender, RoutedEventArgs e)
         {
-                /*
-               openFileDialog = new Microsoft.Win32.OpenFileDialog();
-               string TxtWrite = "Hello WPF";
-               openFileDialog.DefaultExt = ".txt";//預設副檔案名
-               openFileDialog.ShowDialog();
-               using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
-               {
-                    writer.WriteLine(TxtWrite);
-               }
-                */
+            /*
+           openFileDialog = new Microsoft.Win32.OpenFileDialog();
+           string TxtWrite = "Hello WPF";
+           openFileDialog.DefaultExt = ".txt";//預設副檔案名
+           openFileDialog.ShowDialog();
+           using (StreamWriter writer = new StreamWriter(openFileDialog.FileName))
+           {
+                writer.WriteLine(TxtWrite);
+           }
+            */
             //挑選寫入的檔案
             string writeContent = "Hello WPF";
             FileCRUD.WriteFile(writeContent);
         }
 
-            
+
 
 
 
@@ -151,6 +111,15 @@ namespace CreateExcel
             FileCRUD.ReadFile();
         }
 
+        private void SelectFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CommonOpenFileDialog() { IsFolderPicker = true };
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                FolderPath = dialog.FileName;
+            }
+        }
+
 
         //public void CreateFile(string folderName,string fileName,string fileExtension)
         //{
@@ -161,7 +130,7 @@ namespace CreateExcel
         //    //創建檔案的條件 1.路徑兩個一個文件夾一個 2.檔名 3.寫入的副檔名
         //    string  path = $@"C:\\Bulidschool\{folderName}\{fileName}.{fileExtension}";
         //    //判別檔案是否存在
-            
+
         //    if(fileName == null)
         //    {
         //        MessageBox.Show("檔名不可為空白");
@@ -183,7 +152,7 @@ namespace CreateExcel
         //            }
         //        }
         //    }
-  
+
         //}
         //public static object WriteFile(string writeContent)
         //{
@@ -205,16 +174,16 @@ namespace CreateExcel
         //    string fileContent = System.IO.File.ReadAllText(openFileDialog.FileName);
         //    if (fileContent == "")//這裡不可用null
         //    {
-                
+
         //        return MessageBox.Show("沒有任何內容有夠可悲");
         //    }
         //    else
         //    {
         //        return MessageBox.Show(fileContent);
         //    }
-            
+
         //}
 
-        
+
     }
 }

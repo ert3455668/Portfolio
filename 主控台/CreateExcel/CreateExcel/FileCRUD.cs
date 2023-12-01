@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using File = System.IO.File;
 
 namespace CreateExcel
 {
@@ -26,7 +27,7 @@ namespace CreateExcel
             }
             else
             {
-                if (System.IO.File.Exists(path))
+                if (File.Exists(path))
                 {
                     //存在時會跳出請更換檔名
                     MessageBox.Show(fileName + "檔案已存在請更換檔名");
@@ -37,7 +38,6 @@ namespace CreateExcel
                     using (StreamWriter writer = new StreamWriter(path))
                     {
                         MessageBox.Show(fileName + "創建成功");
-
                     }
                 }
             }

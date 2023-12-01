@@ -6,19 +6,46 @@
         xmlns:local="clr-namespace:CreateExcel"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="600">
     <Grid Margin="0,5,0,-5">
-        <Button Content="Create" HorizontalAlignment="Left" Margin="150,101,0,0" VerticalAlignment="Top" Height="80" Width="80" Click="Button_Create"/>
-        <Button Content="Write" HorizontalAlignment="Left" Margin="384,101,0,0" VerticalAlignment="Top"  Height="80" Width="80" Click="Button_Write"/>
-        <Button Content="Read" HorizontalAlignment="Left" Margin="623,101,0,0" VerticalAlignment="Top"  Height="80" Width="80" Click="Button_Read" />
-        <Label Content="請輸入檔名" HorizontalAlignment="Left" Margin="75,64,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="150,68,0,0" TextWrapping="Wrap" Text="{Binding CreateFileNameText}" VerticalAlignment="Top" Width="120" />
-        <Button Content="CreateTxt" HorizontalAlignment="Left" Margin="150,290,0,0" VerticalAlignment="Top" Height="80" Width="80" Click="CreateTxt"/>
-        <Button Content="WriteTxt" HorizontalAlignment="Left" Margin="384,290,0,0" VerticalAlignment="Top" Height="80" Width="80" Click="WriteTxt"/>
-        <Button Content="ReadTxt" HorizontalAlignment="Left" Margin="623,290,0,0" VerticalAlignment="Top" Height="80" Width="80" Click="ReadTxt"/>
-        <Label Content="請輸入檔名" HorizontalAlignment="Left" Margin="75,256,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Margin="150,260,0,0" TextWrapping="Wrap" Text="{Binding CreateFileNameTxt}" VerticalAlignment="Top" Width="120" />
-
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10">
+            <WrapPanel>
+                <WrapPanel.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Width" Value="120"/>
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                    </Style>
+                </WrapPanel.Resources>
+                <WrapPanel>
+                    <TextBlock Text="檔名 : "/>
+                    <TextBox  Text="{Binding FileName}" />
+                </WrapPanel>
+                <WrapPanel Margin="20,0">
+                    <TextBlock Text="副檔名 : "/>
+                    <TextBox   Text="{Binding Extension}"  />
+                </WrapPanel>
+            </WrapPanel>
+            <WrapPanel Margin="0,10,0,0">
+                <TextBlock Text="路徑 : "/>
+                <TextBox  TextWrapping="Wrap" Text="{Binding FolderPath}" IsEnabled="False" MinWidth="450" />
+                <Button Content="..." Click="SelectFolder_Click" Width="50" FontSize="20" Margin="10,0"/>
+            </WrapPanel>
+        </StackPanel>
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
+            <WrapPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="Height" Value="50"/>
+                    <Setter Property="Margin" Value="50"/>
+                </Style>
+            </WrapPanel.Resources>
+            <Button Content="Create"  Click="Button_Create"/>
+            <Button Content="Write" Click="Button_Write"/>
+            <Button Content="Read" Click="Button_Read" />
+        </WrapPanel>
     </Grid>
 </Window>
