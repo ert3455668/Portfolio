@@ -50,32 +50,7 @@ namespace CreateExcel
                 CreateFileName = value;
                 INotifyPropertyChanged(); 
 
-
-            }
-        }
-        public string CreateFileNameTxt
-        {
-            get
-            {
-                return CreateFileNametxt;
-            }
-            set
-            {
-                CreateFileNametxt = value;
-                INotifyPropertyChanged();
-
-
-            }
-        }
-
-        private string CreateFileName;
-       
-        private string CreateFileNametxt;
-
-        
-
-
-
+        //創建
         private void Button_Create(object sender, RoutedEventArgs e)
         {
             //Excelx
@@ -84,9 +59,7 @@ namespace CreateExcel
             string fileExtension = "csv";
             FileCRUD.CreateFile(folderName,fileName,fileExtension);
         }
-
-
-
+        //寫入
         private void Button_Write(object sender, RoutedEventArgs e)
         {
             /*
@@ -101,6 +74,7 @@ namespace CreateExcel
             string writeContent = "Hello Excel";
             FileCRUD.WriteFile(writeContent);
         }
+        //讀取
         private void Button_Read(object sender, RoutedEventArgs e)
         {
             FileCRUD.ReadFile();

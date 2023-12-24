@@ -10,7 +10,6 @@ namespace CreateExcel
 {
     public class FileCRUD
     {
-        //我更新囉
         public static void CreateFile(string folderName, string fileName, string fileExtension)
         {
             //path路徑
